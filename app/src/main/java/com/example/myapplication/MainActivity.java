@@ -78,15 +78,17 @@ public class MainActivity extends AppCompatActivity {
 
     RadioButton GSRadioButton;
     RadioButton STRadioButton;
-     double latitude;
-     double longitude;
+    double platitude =0;
+    double plongtitude = 0;
+
     char csCheck;
 
-    private GpsTracker gpsTracker;
+    //private GpsTracker gpsTracker;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
 
 
 
@@ -124,8 +126,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             if (i == R.id.STDradibtn) {
+                csstart.setEnabled(false);
                 stbtns();
+
             } else if (i == R.id.GSradibtn) {
+                csstart.setEnabled(true);
                 gsbtns();
             }
         }
@@ -158,18 +163,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public class gpsresult{
+        GpsTracker gpsTracker = new GpsTracker(MainActivity.this);
+        double lat = gpsTracker.getLatitude();
+        double lon = gpsTracker.getLongitude();
+    }
+
+
+
 
 
     public void btnchange(){
 
         Button CSstart = (Button) findViewById(R.id.CSstart);
-        TimerRest timer = new TimerRest(10000,1000);
+        TimerRest timer = new TimerRest(100000,1000);
+       // prime pr = new prime();
+        gpsresult gp = new gpsresult();
         CSstart.setOnClickListener(new View.OnClickListener()
 
         {
             @Override
             public void onClick(View arg0)
             {
+                double prlatitude =0;
+                double prlongitude =0;
+
+
+
+                prlatitude = gp.lat;
+                prlongitude = gp.lon;
+                platitude = prlatitude;
+                plongtitude = prlongitude;
                 button1.setEnabled(true);
                 timer.start();
 
@@ -231,11 +255,11 @@ int val;
 
 
 
-    public class prime{
-
-        double platitude =0;
-        double plongtitude = 0;
-    }
+//    public class prime{
+//
+//        double platitude =0;
+//        double plongtitude = 0;
+//    }
     public class dist{
 
         double dislat = 0;
@@ -269,12 +293,12 @@ int val;
         }
 
 
-        prime pr = new prime();
+      //  prime pr = new prime();
         dist di = new dist();
+        gpsresult gp = new gpsresult();
 
 
-        pr.platitude = 35.9684;
-        pr.plongtitude = 126.9581;
+
 
 
 
@@ -299,24 +323,25 @@ int val;
             {
 
 
-                gpsTracker = new GpsTracker(MainActivity.this);
+                double latitude=0;
+                double longitude=0;
 
-                latitude = gpsTracker.getLatitude();
-                longitude = gpsTracker.getLongitude();
 
-               if((Math.abs(latitude)>=Math.abs(pr.platitude)))
-                di.dislat = Math.abs(latitude) - Math.abs(pr.platitude);
+                latitude = gp.lat;
+                longitude = gp.lon;
+
+               if((Math.abs(latitude)>=Math.abs(platitude)))
+                di.dislat = Math.abs(latitude) - Math.abs(platitude);
                else
-                   di.dislat = Math.abs(pr.platitude) - Math.abs(latitude);
+                   di.dislat = Math.abs(platitude) - Math.abs(latitude);
 
-               if((Math.abs(longitude)>=Math.abs(pr.plongtitude)))
-                    di.dislon = Math.abs(longitude) - Math.abs(pr.plongtitude);
+               if((Math.abs(longitude)>=Math.abs(plongtitude)))
+                    di.dislon = Math.abs(longitude) - Math.abs(plongtitude);
                 else
-                    di.dislon = Math.abs(pr.plongtitude) - Math.abs(longitude);
+                    di.dislon = Math.abs(plongtitude) - Math.abs(longitude);
 
-                String dilon = String.format("%.7f", di.dislon);
-                String dilat = String.format("%.7f", di.dislat);
-
+//                String dilon = String.format("%.7f"di.dislon);
+//                String dilat = String.format("%.7f", di.dislat);
 
 
                 mTextView.setText(getTime());
@@ -324,9 +349,11 @@ int val;
                 textview_longitude.setText(String.valueOf(longitude));
 
 
-                nlongitudevie.setText(dilon);
-                nlatitudevie.setText(dilat);
+//                nlongitudevie.setText(dilon);
+//                nlatitudevie.setText(dilat);
 
+                nlongitudevie.setText(String.valueOf(di.dislon));
+                nlatitudevie.setText(String.valueOf(di.dislat));
                 if(Math.abs(di.dislat) <= 0.0002 && Math.abs(di.dislon) <=0.002)
                     csCheck = 'O';
                 else
