@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간"
+            android:textSize="18sp"
+            android:layout_marginBottom="14dp"
+            />
+    <TextView
+        android:id="@+id/latitudevie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="latitude"
+        android:textSize="18sp"
+        android:layout_marginBottom="14dp"
+        />
+    <TextView
+        android:id="@+id/nlatitudevie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원광대 위치 35.9684 / 클릭시 현재위치 - 원광대위치"
+        android:textSize="18sp"
+        android:layout_marginBottom="14dp"
+        />
+    <TextView
+        android:id="@+id/longitudevie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="longitude"
+        android:textSize="18sp"
+        android:layout_marginBottom="14dp"
+        />
+    <TextView
+        android:id="@+id/nlongitudevie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원광대 위치 126.9581 / 클릭시 현재위치 - 원광대위치"
+        android:textSize="18sp"
+        android:layout_marginBottom="14dp"
+        />
+
+    <TextView
+        android:id="@+id/Con"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="O/X"
+        android:textSize="18sp"
+        android:layout_marginBottom="14dp"
+        />
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/STDradibtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="학생" />
+
+        <RadioButton
+            android:id="@+id/GSradibtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="교수" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/refreshBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출석체크"
+            android:visibility="invisible"
+            android:enabled="false"/>
+
+        <Button
+            android:id="@+id/CSstart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출석시작"
+            android:visibility="invisible"/>
+    </FrameLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+
+
+<!--        <EditText-->
+<!--            android:id="@+id/minuteET"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:hint="00"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:inputType="number"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/mintext"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="TextView" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView10"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text=":" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/secondET"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="00"-->
+<!--            android:inputType="number" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/sectext"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="TextView" />-->
+
+
+<!--    </LinearLayout>-->
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+
+</LinearLayout>
+
