@@ -4,15 +4,19 @@ import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -26,6 +30,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
@@ -52,17 +57,15 @@ public class CsCheck extends AppCompatActivity {
     TextView nlongitudevie;
     TextView nlatitudevie;
     TextView name;
-//    EditText minuteET, secondET;
-//    TextView mintext;
-//    TextView sectext;
-//
-//
-//
-//   int minute = Integer.parseInt(minuteET.getText().toString());
-//   int second = Integer.parseInt(secondET.getText().toString());
-//
+
+    private static final String PRIMAY_CHANNEL_ID = "primary_notification_channel";
+
+    private NotificationManager mNotificationManager;
+
+    private static final int NOTIFICATION_ID=0;
 
 
+    int alram_val = 0;
 
     RadioGroup radioGroup;
 
@@ -86,7 +89,38 @@ public class CsCheck extends AppCompatActivity {
         setContentView(R.layout.activity_cscheck);
 
         radibtn();
+        createNotificationChannel();
     }
+
+    public void createNotificationChannel(){
+        mNotificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel nfcc = new NotificationChannel(PRIMAY_CHANNEL_ID,"Test",mNotificationManager.IMPORTANCE_HIGH);
+            nfcc.enableLights(true);
+            nfcc.setLightColor(Color.RED);
+            nfcc.enableVibration(true);
+            nfcc.setDescription("NOTIFICATION");
+
+            mNotificationManager.createNotificationChannel(nfcc);
+
+        }
+
+    }
+    private NotificationCompat.Builder getNotificationBuilder(){
+        NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this,PRIMAY_CHANNEL_ID)
+                .setContentTitle("출석알람!")
+                .setContentText("출석하세요!")
+                .setSmallIcon(R.drawable.clock);
+        return notifyBuilder;
+    }
+    public void sendNotification(){
+        NotificationCompat.Builder notifyBuilder = getNotificationBuilder();
+        mNotificationManager.notify(NOTIFICATION_ID,notifyBuilder.build());
+    }
+
+
 
 
     public void radibtn() {
@@ -105,8 +139,12 @@ public class CsCheck extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (i == R.id.STDradibtn) {
+                    if(alram_val==1)
+                    {sendNotification();}
                     csstart.setEnabled(false);
+
                     stbtns();
+
 
                 } else if (i == R.id.GSradibtn) {
                     csstart.setEnabled(true);
@@ -128,7 +166,12 @@ public class CsCheck extends AppCompatActivity {
         btns();
     }
 
+    // 타이머 TimeRest에 전달된 시간만큼 타이머 작동
+    //onTick은 초마다 실행할 명령어
+    //onfinish로 출석체크 버튼 비활성화
+
     class TimerRest extends CountDownTimer {
+
         public TimerRest(long millisInFuture, long countDownInterval){
             super(millisInFuture,countDownInterval);
         }
@@ -142,6 +185,7 @@ public class CsCheck extends AppCompatActivity {
         }
     }
 
+    //학생 좌표받기
     public class gpsresult{
         GpsTracker gpsTracker = new GpsTracker(CsCheck.this);
         double lat = gpsTracker.getLatitude();
@@ -150,6 +194,7 @@ public class CsCheck extends AppCompatActivity {
 
 
     }
+    //교수 좌표받기
     public class pgpsresult{
         GpsTracker gpsTracker = new GpsTracker(CsCheck.this);
         double lat = gpsTracker.getPRLatitude();
@@ -163,9 +208,11 @@ public class CsCheck extends AppCompatActivity {
 
 
 
+    //출석체크 버튼 클릭시 발생 이벤트 / 교수의 좌표를 받아 전달하고 타이머 5분 시작
     public void btnchange(){
 
         Button CSstart = (Button) findViewById(R.id.CSstart);
+        //5분 타이머
         TimerRest timer = new TimerRest(300000,1000);
         // prime pr = new prime();
         pgpsresult pgp = new pgpsresult();
@@ -186,6 +233,7 @@ public class CsCheck extends AppCompatActivity {
                 plongtitude = prlongitude;
                 button1.setEnabled(true);
                 timer.start();
+                alram_val=1;
 
             }
 
@@ -195,6 +243,7 @@ public class CsCheck extends AppCompatActivity {
 
 
 
+    //User 리스트에 db값 전달
 
     public List<User> userList ;
 
