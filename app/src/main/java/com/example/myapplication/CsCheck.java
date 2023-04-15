@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -69,7 +71,7 @@ public class CsCheck extends AppCompatActivity {
     double platitude =0;
     double plongtitude = 0;
 
-    char csCheck;
+    String csCheck;
 
     //private GpsTracker gpsTracker;
 
@@ -210,32 +212,6 @@ public class CsCheck extends AppCompatActivity {
     }
 
 
-    int val;
-    void getVal(){
-
-        //Dbhelper의 읽기모드 객체를 가져와 SQLiteDatabase에 담아 사용준비
-        DataBaseHelper helper = new DataBaseHelper(this);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
-
-        //Cursor라는 그릇에 목록을 담아주기
-        Cursor cursor = database.rawQuery("SELECT Student_id FROM student where Username = '김경호'" ,null);
-
-
-//        if(cursor != null && cursor.moveToFirst())
-        //목록의 개수만큼 순회하여 adapter에 있는 list배열에 add
-        while(cursor.moveToNext()){
-            //num 행은 가장 첫번째에 있으니 0번이 되고, name은 1번
-            val = cursor.getInt(0);
-        }
-        name=(TextView)findViewById(R.id.name);
-        name.setText(String.valueOf(val));
-        cursor.close();
-        helper.close();
-
-
-
-    }
 
 
 
@@ -333,9 +309,9 @@ public class CsCheck extends AppCompatActivity {
 //                nlongitudevie.setText(String.valueOf(di.dislon));
 //                nlatitudevie.setText(String.valueOf(di.dislat));
                 if(Math.abs(di.dislat) <= 0.0002 && Math.abs(di.dislon) <=0.002)
-                    csCheck = 'O';
+                    csCheck = "O";
                 else
-                    csCheck = 'X';
+                    csCheck = "X";
 
 
 
@@ -353,6 +329,54 @@ public class CsCheck extends AppCompatActivity {
         });
     }
 
+    //데이터 베이스 값 읽기
+    String val;
+    void getVal(){
+
+        //Dbhelper의 읽기모드 객체를 가져와 SQLiteDatabase에 담아 사용준비
+        DataBaseHelper helper = new DataBaseHelper(this);
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+//        try
+//        {
+//           helper.DoCopyDB();
+//        }
+//        catch (IOException mIOException)
+//        {
+//            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
+//            throw new Error("UnableToCreateDatabase");
+//        }
+
+        //Cursor라는 그릇에 목록을 담아주기
+        Cursor cursor = database.rawQuery("SELECT * FROM student WHERE Username = '김경호'" ,null);
+
+         helper.insertData(getTime(),csCheck,"김강호");
+//        helper.insertTimeData(getTime(),"김경호");
+//        helper.insertCSData(csCheck,"김경호");
+//        if(cursor != null && cursor.moveToFirst())
+        //목록의 개수만큼 순회하여 adapter에 있는 list배열에 add
+        while(cursor.moveToNext()){
+            //num 행은 가장 첫번째에 있으니 0번이 되고, name은 1번
+
+            val = cursor.getString(7);
+//            if(isInserted==true)
+//
+
+        }
+
+
+      //  boolean isInserted =
+
+
+
+                name=(TextView)findViewById(R.id.name);
+        name.setText(String.valueOf(val));
+        cursor.close();
+        helper.close();
+
+
+
+    }
 
 
 

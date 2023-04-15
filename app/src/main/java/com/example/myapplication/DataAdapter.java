@@ -87,13 +87,13 @@ public class DataAdapter {
                     // TODO : Record 기술
                     // id, name, account, privateKey, secretKey, Comment
                     user.Username(mCur.getString(0));
-                    user.Student_id(mCur.getInt(1));
+                    user.Student_id(mCur.getString(1));
                     user.ID(mCur.getString(2));
                     user.Password(mCur.getString(3));
                     user.Email(mCur.getString(4));
-                    user.is_professor(mCur.getInt(5));
-                    user.Time(mCur.getInt(6));
-                    user.CsCheck(mCur.getInt(7));
+                    user.is_professor(mCur.getString(5));
+                    user.Time(mCur.getString(6));
+                    user.CsCheck(mCur.getString(7));
 
 
 

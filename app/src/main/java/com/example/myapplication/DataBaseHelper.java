@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -21,6 +23,14 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     private static String DB_NAME = "test_db.db";
     private SQLiteDatabase mDataBase;
     private Context mContext;
+
+    public static  final String TABLE_NAME = "student";
+
+    public static final String Col1 = "Time";
+
+    public static final String Col2 = "Cs";
+
+
 
     public DataBaseHelper(Context context) {
         super(context,DB_NAME,null,1);
@@ -110,9 +120,72 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME);
+        onCreate(sqLiteDatabase);
+    }
+
+//    public void insertData(String time, String cscheck){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(Col1,time);
+//        contentValues.put(Col2,cscheck);
+//        long result = db.insert(TABLE_NAME,"Time", contentValues);
+//        if(result == -1)
+//            Toast.makeText(mContext,"출석값 입력 실패",Toast.LENGTH_LONG).show();
+//       else
+//            Toast.makeText(mContext,"출석값 입력 완료",Toast.LENGTH_LONG).show();
+//
+//    }
+//    public void insertTimeData(String time, String Username){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(Col1,time);
+//        db.update(TABLE_NAME,contentValues,"Username=?",new String[]{Username});
+//
+//    }
+//    public void insertCSData(String CsCheck, String Username){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(Col2,CsCheck);
+//        db.update(TABLE_NAME,contentValues,"Username=?",new String[]{Username});
+//
+//    }
+    public void insertData(String time,String cscheck, String Username){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Col1,time);
+        contentValues.put(Col2,cscheck);
+        db.update(TABLE_NAME,contentValues,"Username=?",new String[]{Username});
 
     }
 
+    public void DoCopyDB()throws IOException{
+        this.getReadableDatabase();
+        this.close();
+        try
+        {
+            //Copy the database from assests
+            copyDataBase();
+            Log.e(TAG, "createDatabase database created");
+        }
+        catch (IOException mIOException)
+        {
+            throw new Error("ErrorCopyingDataBase");
+        }
+    }
+
+
+//    public void UpdateData(String time, String cscheck){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(Col1,time);
+//        contentValues.put(Col2,cscheck);
+//        long result = db.insert(TABLE_NAME,null, contentValues);
+//        if(result == -1)
+//            Toast.makeText(mContext,"출석값 입력 실패",Toast.LENGTH_LONG).show();
+//        else
+//            Toast.makeText(mContext,"출석값 입력 완료",Toast.LENGTH_LONG).show();
+//    }
 
 
 

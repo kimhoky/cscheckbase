@@ -2,19 +2,19 @@ package com.example.myapplication;
 
 public class User {
     public String Username;
-    public int Student_id;
+    public String Student_id;
     public String ID;
     public String Password;
     public String Email;
-    public int is_professor;
-    public int Time;
-    public int CsCheck;
+    public String is_professor;
+    public String Time;
+    public String Cs;
 
     public void Username(String username) {
         this.Username = username;
     }
 
-    public void Student_id(int sid) {
+    public void Student_id(String sid) {
         this.Student_id = sid;
     }
 
@@ -30,16 +30,16 @@ public class User {
         this.Email = email;
     }
 
-    public void is_professor(int isp) {
+    public void is_professor(String isp) {
         this.is_professor=isp;
     }
 
-    public void Time(int time) {
+    public void Time(String time) {
         this.Time = time;
     }
 
-    public void CsCheck(int csc) {
-        this.CsCheck=csc;
+    public void CsCheck(String csc) {
+        this.Cs=csc;
     }
 
    /* public User(String Username,int Student_id,String ID,String Password,String Email,int is_professor,int Time,int CsCheck){
