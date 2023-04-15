@@ -6,6 +6,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -109,10 +110,16 @@ public class CsCheck extends AppCompatActivity {
 
     }
     private NotificationCompat.Builder getNotificationBuilder(){
+        Intent notify = new Intent(this,CsCheck.class);
+       // notify.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent notifyPending = PendingIntent.getActivity
+                (this,NOTIFICATION_ID,notify,PendingIntent.FLAG_MUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this,PRIMAY_CHANNEL_ID)
                 .setContentTitle("출석알람!")
                 .setContentText("출석하세요!")
-                .setSmallIcon(R.drawable.clock);
+                .setSmallIcon(R.drawable.clock)
+                .setContentIntent(notifyPending)
+                .setAutoCancel(true);
         return notifyBuilder;
     }
     public void sendNotification(){
