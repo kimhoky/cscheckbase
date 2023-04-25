@@ -10,6 +10,8 @@ public class User {
     public String Time;
     public String Cs;
 
+
+
     public void Username(String username) {
         this.Username = username;
     }
@@ -42,6 +44,13 @@ public class User {
         this.Cs=csc;
     }
 
+//    public User(String ID, String Username, String Time, String Cs){
+//        this.ID = ID;
+//        this.Username = Username;
+//        this.Time = Time;
+//        this.Cs = Cs;
+//    }
+
    /* public User(String Username,int Student_id,String ID,String Password,String Email,int is_professor,int Time,int CsCheck){
         this.Username =Username;
         this.Student_id=Student_id;
@@ -52,4 +61,16 @@ public class User {
         this.Time=Time;
         this.CsCheck=CsCheck;
     }*/
+    public String getUsername(){
+        return this.Username;
+    }
+    public String getStudent_id(){
+        return this.Student_id;
+    }
+    public String getCs(){
+        return  this.Cs;
+    }
+    public String getTime(){
+        return this.Time;
+    }
 }

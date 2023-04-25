@@ -112,4 +112,59 @@ public class DataAdapter {
         }
     }
 
+
+
+    public void getReadableDatabase()
+    {
+        try
+        {
+            // Table 이름 -> antpool_bitcoin 불러오기
+            String sql ="SELECT * FROM " + TABLE_NAME;
+
+            // 모델 넣을 리스트 생성
+            List userList = new ArrayList();
+
+            // TODO : 모델 선언
+            User user= null;
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+                // 칼럼의 마지막까지
+                while( mCur.moveToNext() ) {
+
+                    // TODO : 커스텀 모델 생성
+                    user = new User();
+
+                    // TODO : Record 기술
+                    // id, name, account, privateKey, secretKey, Comment
+                    user.Username(mCur.getString(0));
+                    user.Student_id(mCur.getString(1));
+                    user.ID(mCur.getString(2));
+                    user.Password(mCur.getString(3));
+                    user.Email(mCur.getString(4));
+                    user.is_professor(mCur.getString(5));
+                    user.Time(mCur.getString(6));
+                    user.CsCheck(mCur.getString(7));
+
+
+
+
+                    // 리스트에 넣기
+                    userList.add(user);
+                }
+
+            }
+
+        }
+        catch (SQLException mSQLException)
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+
+
+
+
 }

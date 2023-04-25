@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CsCheck"/>
+        <activity android:name=".ListOpener"/>
 
 
     </application>

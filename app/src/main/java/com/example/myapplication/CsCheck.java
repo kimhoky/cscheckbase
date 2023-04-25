@@ -21,8 +21,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -58,6 +63,7 @@ public class CsCheck extends AppCompatActivity {
     TextView nlongitudevie;
     TextView nlatitudevie;
     TextView name;
+
 
     private static final String PRIMAY_CHANNEL_ID = "primary_notification_channel";
 
@@ -91,6 +97,14 @@ public class CsCheck extends AppCompatActivity {
 
         radibtn();
         createNotificationChannel();
+
+        Button tolist = (Button) findViewById(R.id.toList);
+        tolist.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(),ListOpener.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void createNotificationChannel(){
@@ -140,6 +154,9 @@ public class CsCheck extends AppCompatActivity {
 
         button1 = (Button) findViewById(R.id.refreshBtn);
         csstart = (Button) findViewById(R.id.CSstart);
+
+
+
     }
 
         RadioGroup.OnCheckedChangeListener radioGroupButtonChangeListener = new RadioGroup.OnCheckedChangeListener() {
@@ -245,6 +262,8 @@ public class CsCheck extends AppCompatActivity {
             }
 
         });
+
+
     }
 
 
@@ -254,7 +273,7 @@ public class CsCheck extends AppCompatActivity {
 
     public List<User> userList ;
 
-    private void initLoadDB() {
+    public void initLoadDB() {
 
         DataAdapter mDbHelper = new DataAdapter(getApplicationContext());
         mDbHelper.createDatabase();
@@ -267,11 +286,30 @@ public class CsCheck extends AppCompatActivity {
         mDbHelper.close();
     }
 
-
-
-
-
-
+//    public void initLoad() {
+//
+//        DataBaseHelper dbhelper =new DataBaseHelper(this);
+//        SQLiteDatabase db = dbhelper.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM student",null);
+//        CSLIST cslist = new CSLIST();
+//
+//        String va1="";
+//        String va2="";
+//        String va3="";
+//        String va4="";
+//        while(cursor.moveToNext()){
+//            cslist.addItemToList(cursor.getString(1),cursor.getString(0),cursor.getString(6),cursor.getString(7));
+////            va1 = cursor.getString(1);
+////            va2 = cursor.getString(0);
+////            va3 = cursor.getString(6);
+////            va4= cursor.getString(7);
+//        }
+////        Toast.makeText(getApplicationContext(),va3,Toast.LENGTH_LONG).show();
+//
+//
+//        dbhelper.close();
+//        db.close();
+//    }
 
 
 
@@ -372,8 +410,11 @@ public class CsCheck extends AppCompatActivity {
 
 
                 Con.setText(String.valueOf(csCheck));
-                initLoadDB();
+               // initLoadDB();
                 getVal();
+                //initLoad();
+
+
 
 
 
@@ -454,6 +495,17 @@ public class CsCheck extends AppCompatActivity {
                 break;
         }
     }
+
+
+
+//    void MKList(){
+//        ArrayList<User> user;
+//
+//    }
+
+
+
+
 
 
 
